@@ -35,7 +35,7 @@ function App() {
 
   const renderHero = (ativo:Boolean) =>{
     setHeroi(true)
-    const root = ReactDOM.createRoot(document.getElementById('content-form-heroi') as HTMLElement)  
+    const root = ReactDOM.createRoot(document.getElementById('content-app') as HTMLElement)  
     const HeroiComponent = (<Heroi heroi={nomePersonagem} experiencia={experiencia} ></Heroi>)
     root.render(HeroiComponent) 
   }
@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-      <div id="content-form-heroi">
+      <div id="content-app">
         <form id="formulario-heroi" onSubmit={handleSubmite}>
           <input 
             type="text" 

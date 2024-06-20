@@ -1,11 +1,11 @@
-#content-form-heroi{ 
-  margin: auto;
+#content-app{ 
+  margin: 100px auto auto;
   padding: 8px;  
   width: 300px;
-  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;  
+  flex-direction: column;
 }
 
 #formulario-heroi{
@@ -18,7 +18,7 @@
   margin-top: 10px;
 }
 
-#formulario-heroi input{
+input{
   width: 225px;
   height: 30px;
   padding: 2px 4px;
@@ -27,11 +27,11 @@
   border-bottom: 2px solid rgb(255, 255, 255);
 }
 
-#formulario-heroi input:focus{
+input:focus, input{
   outline: none;
 }
 
-#formulario-heroi button{
+button{
   width: 150px;
   height: 25px;
   position: relative;
@@ -44,7 +44,7 @@
   background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);  
 }
 
-#formulario-heroi button:hover{ 
+button:hover{ 
   background: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
   transition: all 0.3s ease;
