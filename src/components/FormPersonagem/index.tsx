@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Style
 import 'index.css';
 
 const FormPersonagem = () => {
@@ -6,4 +8,3 @@ const FormPersonagem = () => {
 }
   
 export default FormPersonagem;
-  
