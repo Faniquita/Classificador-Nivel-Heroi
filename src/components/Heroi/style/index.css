@@ -41,6 +41,14 @@
     padding: 4px 60px;
     border-radius: 20px;
     border: 1px solid rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%,
+                                    rgba(244,151,193,1) 29%,
+                                    rgba(118,174,241,1) 56%,
+                                    rgba(118,174,241,0) 100%);
 }
 
 
+#epx-ganha{
+    background-color: rgb(102, 51, 153);
+    
+}

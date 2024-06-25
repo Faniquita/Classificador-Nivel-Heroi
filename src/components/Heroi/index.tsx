@@ -15,34 +15,44 @@ function Heroi({heroi, experiencia}:HeroiProps){
 
     let title:string, informacao:string, nivel:number
 
-    //Chamando informações para preencher
+    //Definição cartão do Heroi
+    const cartaoHeroi = (experiencia:number, heroi:string, page:boolean) => {}
 
-    const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()      
-        
+    const functionTitle = (expValidado:number) => {
+        let titleText:string
+
         //Título
         if(experiencia < 1000){
-            title = 'Ferro'
+            return titleText = 'Ferro'
         }else if(experiencia >=1001 && experiencia <= 2000){
-            title = 'Bronze'
+            return titleText = 'Bronze'
         }else if(experiencia >=2001 && experiencia <= 5000){
-            title = 'Prata'
+            return titleText = 'Prata'
         }else if(experiencia >=5001 && experiencia <= 7000){
-            title = 'Ouro'
+            return titleText = 'Ouro'
         }else if(experiencia >=7001 && experiencia <= 8000){
-            title = 'Platina'
+            return titleText = 'Platina'
         }else if(experiencia >=8001 && experiencia <= 9000){
-            title = 'Ascendente'
+            return titleText = 'Ascendente'
         }else if(experiencia >=9001 && experiencia <= 10000){
-            title = 'Imortal'
+            return titleText = 'Imortal'
         }else if(experiencia >= 10001){
-            title = 'Radiante'
+            return titleText = 'Radiante'
+        }else{
+            return titleText = 'Iniciante'
         }
 
+    }
+
+    //Chamando informações para preencher
+    const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()             
+
         //Subindo de Level
+        title = functionTitle(experiencia) ?? ""
     
         //Montando Informação
-        informacao = `O Herói de nome ${heroi} está no nível de ` + nivel
+        informacao = `O Herói de nome ${heroi} está no nível de ${title} ` + nivel
     }
 
     return(        
@@ -57,9 +67,9 @@ function Heroi({heroi, experiencia}:HeroiProps){
                 </div>
                 <div className="informacoes">
                     <div id="nome">{heroi}</div>
-                    <div id="titulo"></div>
-                    <div id="level">Level  ??</div>
-                    <div id="experiencia">{experiencia} / 100001 </div>                    
+                    <div id="titulo">{title}</div>
+                    <div id="level">Level {nivel}</div>
+                    <div id="experiencia"> {experiencia} / 100001 </div>                    
                     <div id="texto">{informacao}</div>            
                 </div>            
             </div>
