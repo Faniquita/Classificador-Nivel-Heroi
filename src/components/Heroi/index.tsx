@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 //Style
 import './style/index.css';
@@ -9,40 +9,34 @@ type HeroiProps = {
 }
 
 function Heroi({heroi, experiencia}:HeroiProps){
-    const [exp, setExp]= useState<number>(0)
-
-    const chibi = require('./img/pj1.png')
-
-    let title:string, informacao:string, nivel:number
-
-    //Definição cartão do Heroi
-    const cartaoHeroi = (experiencia:number, heroi:string, page:boolean) => {}
-
+     
+    //MONTANDO TITULO DO HEROI
     const functionTitle = (expValidado:number) => {
         let titleText:string
 
         //Título
-        if(experiencia < 1000){
+        if(expValidado < 1000){
             return titleText = 'Ferro'
-        }else if(experiencia >=1001 && experiencia <= 2000){
+        }else if(expValidado >=1001 && expValidado <= 2000){
             return titleText = 'Bronze'
-        }else if(experiencia >=2001 && experiencia <= 5000){
+        }else if(expValidado >=2001 && expValidado <= 5000){
             return titleText = 'Prata'
-        }else if(experiencia >=5001 && experiencia <= 7000){
+        }else if(expValidado >=5001 && expValidado <= 7000){
             return titleText = 'Ouro'
-        }else if(experiencia >=7001 && experiencia <= 8000){
+        }else if(expValidado >=7001 && expValidado <= 8000){
             return titleText = 'Platina'
-        }else if(experiencia >=8001 && experiencia <= 9000){
+        }else if(expValidado >=8001 && expValidado <= 9000){
             return titleText = 'Ascendente'
-        }else if(experiencia >=9001 && experiencia <= 10000){
+        }else if(expValidado >=9001 && expValidado <= 10000){
             return titleText = 'Imortal'
-        }else if(experiencia >= 10001){
+        }else if(expValidado >= 10001){
             return titleText = 'Radiante'
         }else{
             return titleText = 'Iniciante'
         }
     }
 
+    //MONTANDO NÍVEL DO HEROI
     const functionNivel = (expValidado:number) => {
         let nivelExp:number
 
@@ -69,28 +63,10 @@ function Heroi({heroi, experiencia}:HeroiProps){
 
     }
 
-    //Chamando informações para preencher
-    const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()           
+    //MONTANDO INFORMAÇÃO GERAL DO HEROI
+    const cartaoHeroi = (experiencia:number, heroi:string) => {
+        let title:string, informacao:string, nivel:number
         
-        alert('cliquei')
-
-        let textExperiencia:HTMLElement | null = document.getElementById('experiencia') ?? null
-        let textNivel:HTMLElement | null = document.getElementById('level') ?? null
-        let textTitle:HTMLElement | null = document.getElementById('titulo') ?? null
-        let textInformacao:HTMLElement | null = document.getElementById('texto') ?? null
-
-        //Subindo de Level
-        let countExp:number = exp
-        let valor:number
-        
-        for(countExp; countExp > 0; countExp--){
-            setTimeout(()=>{
-                valor = experiencia + 1
-                textExperiencia!.innerText = valor.toString() + ' / 10001'
-            },500)            
-        }
-
         title = functionTitle(experiencia) ?? ""
         textTitle!.innerText = title
 
@@ -99,15 +75,70 @@ function Heroi({heroi, experiencia}:HeroiProps){
             textNivel!.innerText = '??'
         }else{
             textNivel!.innerText = nivel.toString()
-        }
-        
-        
+        }        
         
         //Montando Informação
         informacao = `O Herói de nome ${heroi} está no nível de ${title} `
         textInformacao!.innerText = informacao
     }
 
+
+    //------------------------------------------------------------------//
+    const chibi = require('./img/pj1.png')
+
+    const [currentExp, setCurrentExp] = useState<number>(experiencia);
+    const [currentNivel, setCurrentNivel] = useState<number>(functionNivel(experiencia));
+    const [currentTitulo, setCurrentTitulo] = useState<string>(functionTitle(experiencia));
+    const [currentInformacao, setCurrentInformacao] = useState<string>(cartaoHeroi(experiencia, heroi));
+
+    const [exp, setExp]= useState<number>(0)    
+
+    //VALIDANDO FORMULÁRIO PARA SUBIR DE LEVEL NOVAMENTE
+    const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()           
+        
+        let textNivel:HTMLElement | null = document.getElementById('level') ?? null
+        let textTitle:HTMLElement | null = document.getElementById('titulo') ?? null
+        let textInformacao:HTMLElement | null = document.getElementById('texto') ?? null
+        
+        //Subindo de Level
+        let targetExp = currentExp + exp;
+        let countXP = currentExp
+
+        /*let interval = setInterval(() => {
+            if (currentExp < targetExp) {
+                setCurrentExp((prev) => prev + 1);
+            } else {
+                clearInterval(interval);
+            }
+        }, 150);*/
+        
+       for(countXP; targetExp > countXP; countXP++){
+            setTimeout(()=>{
+                setCurrentExp(countXP)
+            }, ((countXP-targetExp) * 150))            
+        }
+
+        let title:string, informacao:string, nivel:number
+        
+        title = functionTitle(targetExp) ?? ""
+        textTitle!.innerText = title
+
+        nivel = functionNivel(targetExp) ?? 0
+        if(nivel === 999){
+            textNivel!.innerText = '??'
+        }else{
+            textNivel!.innerText = nivel.toString()
+        }        
+        
+        //Montando Informação
+        informacao = `O Herói de nome ${heroi} está no nível de ${title} `
+        textInformacao!.innerText = informacao
+
+        
+    }
+
+    //------------------------------------------------------------------//
     return(        
         <>
             <div className='title'>
@@ -120,10 +151,10 @@ function Heroi({heroi, experiencia}:HeroiProps){
                 </div>
                 <div className="informacoes">
                     <div id="nome">{heroi}</div>
-                    <div id="titulo">{}</div>
-                    <div id="level">Level {}</div>
-                    <div id="experiencia"> {experiencia} / 10001 </div>                    
-                    <div id="texto">{}</div>            
+                    <div id="titulo">{currentTitulo}</div>
+                    <div id="level">Level {currentNivel}</div>
+                    <div id="experiencia"> {currentExp} / 10001 </div>                    
+                    <div id="texto">{currentInformacao}</div>            
                 </div>            
             </div>
             <div>

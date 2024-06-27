@@ -24,8 +24,6 @@ function App() {
     }else if(!experiencia || experiencia <= 0){
       alert("Quantidade de experiência adquirida não pode ser igual ou menor que 0!")
       return false
-    }else{
-      alert("Seja bem vindo(a) " + nomePersonagem + "!")
     }
 
     //Renderizando nosso Herói
