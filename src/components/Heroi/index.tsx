@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 //Style
 import './style/index.css';
@@ -41,18 +41,71 @@ function Heroi({heroi, experiencia}:HeroiProps){
         }else{
             return titleText = 'Iniciante'
         }
+    }
+
+    const functionNivel = (expValidado:number) => {
+        let nivelExp:number
+
+        //Título
+        if(experiencia < 1000){
+            return nivelExp = 20
+        }else if(experiencia >=1001 && experiencia <= 2000){
+            return nivelExp = 30
+        }else if(experiencia >=2001 && experiencia <= 5000){
+            return nivelExp = 50
+        }else if(experiencia >=5001 && experiencia <= 7000){
+            return nivelExp = 60
+        }else if(experiencia >=7001 && experiencia <= 8000){
+            return nivelExp = 70
+        }else if(experiencia >=8001 && experiencia <= 9000){
+            return nivelExp = 80
+        }else if(experiencia >=9001 && experiencia <= 10000){
+            return nivelExp = 90
+        }else if(experiencia >= 10001){
+            return nivelExp = 999
+        }else{
+            return nivelExp = 0
+        }
 
     }
 
     //Chamando informações para preencher
     const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()             
+        e.preventDefault()           
+        
+        alert('cliquei')
+
+        let textExperiencia:HTMLElement | null = document.getElementById('experiencia') ?? null
+        let textNivel:HTMLElement | null = document.getElementById('level') ?? null
+        let textTitle:HTMLElement | null = document.getElementById('titulo') ?? null
+        let textInformacao:HTMLElement | null = document.getElementById('texto') ?? null
 
         //Subindo de Level
+        let countExp:number = exp
+        let valor:number
+        
+        for(countExp; countExp > 0; countExp--){
+            setTimeout(()=>{
+                valor = experiencia + 1
+                textExperiencia!.innerText = valor.toString() + ' / 10001'
+            },500)            
+        }
+
         title = functionTitle(experiencia) ?? ""
-    
+        textTitle!.innerText = title
+
+        nivel = functionNivel(experiencia) ?? 0
+        if(nivel === 999){
+            textNivel!.innerText = '??'
+        }else{
+            textNivel!.innerText = nivel.toString()
+        }
+        
+        
+        
         //Montando Informação
-        informacao = `O Herói de nome ${heroi} está no nível de ${title} ` + nivel
+        informacao = `O Herói de nome ${heroi} está no nível de ${title} `
+        textInformacao!.innerText = informacao
     }
 
     return(        
@@ -67,10 +120,10 @@ function Heroi({heroi, experiencia}:HeroiProps){
                 </div>
                 <div className="informacoes">
                     <div id="nome">{heroi}</div>
-                    <div id="titulo">{title}</div>
-                    <div id="level">Level {nivel}</div>
-                    <div id="experiencia"> {experiencia} / 100001 </div>                    
-                    <div id="texto">{informacao}</div>            
+                    <div id="titulo">{}</div>
+                    <div id="level">Level {}</div>
+                    <div id="experiencia"> {experiencia} / 10001 </div>                    
+                    <div id="texto">{}</div>            
                 </div>            
             </div>
             <div>
@@ -81,7 +134,7 @@ function Heroi({heroi, experiencia}:HeroiProps){
                         value={exp}
                         onChange={(e) => setExp(parseInt(e.target.value))}
                     />
-                    <button type="submit">Diferente</button>
+                    <button type="submit">Ganhar</button>
                 </form>
             </div>
         </>
