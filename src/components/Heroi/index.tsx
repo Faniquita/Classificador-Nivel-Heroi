@@ -41,21 +41,21 @@ function Heroi({heroi, experiencia}:HeroiProps){
         let nivelExp:number
 
         //Título
-        if(experiencia < 1000){
+        if(expValidado < 1000){
             return nivelExp = 20
-        }else if(experiencia >=1001 && experiencia <= 2000){
+        }else if(expValidado >=1001 && expValidado <= 2000){
             return nivelExp = 30
-        }else if(experiencia >=2001 && experiencia <= 5000){
+        }else if(expValidado >=2001 && expValidado <= 5000){
             return nivelExp = 50
-        }else if(experiencia >=5001 && experiencia <= 7000){
+        }else if(expValidado >=5001 && expValidado <= 7000){
             return nivelExp = 60
-        }else if(experiencia >=7001 && experiencia <= 8000){
+        }else if(expValidado >=7001 && expValidado <= 8000){
             return nivelExp = 70
-        }else if(experiencia >=8001 && experiencia <= 9000){
+        }else if(expValidado >=8001 && expValidado <= 9000){
             return nivelExp = 80
-        }else if(experiencia >=9001 && experiencia <= 10000){
+        }else if(expValidado >=9001 && expValidado <= 10000){
             return nivelExp = 90
-        }else if(experiencia >= 10001){
+        }else if(expValidado >= 10001){
             return nivelExp = 999
         }else{
             return nivelExp = 0
@@ -64,22 +64,14 @@ function Heroi({heroi, experiencia}:HeroiProps){
     }
 
     //MONTANDO INFORMAÇÃO GERAL DO HEROI
-    const cartaoHeroi = (experiencia:number, heroi:string) => {
-        let title:string, informacao:string, nivel:number
-        
-        title = functionTitle(experiencia) ?? ""
-        textTitle!.innerText = title
+    const cartaoHeroi = (expValidado:number, heroi:string) => {
+        let title:string, informacao:string
 
-        nivel = functionNivel(experiencia) ?? 0
-        if(nivel === 999){
-            textNivel!.innerText = '??'
-        }else{
-            textNivel!.innerText = nivel.toString()
-        }        
-        
+        title = functionTitle(expValidado) ?? "Iniciante"
+
         //Montando Informação
         informacao = `O Herói de nome ${heroi} está no nível de ${title} `
-        textInformacao!.innerText = informacao
+        return informacao
     }
 
 
@@ -95,11 +87,7 @@ function Heroi({heroi, experiencia}:HeroiProps){
 
     //VALIDANDO FORMULÁRIO PARA SUBIR DE LEVEL NOVAMENTE
     const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()           
-        
-        let textNivel:HTMLElement | null = document.getElementById('level') ?? null
-        let textTitle:HTMLElement | null = document.getElementById('titulo') ?? null
-        let textInformacao:HTMLElement | null = document.getElementById('texto') ?? null
+        e.preventDefault()              
         
         //Subindo de Level
         let targetExp = currentExp + exp;
@@ -113,29 +101,24 @@ function Heroi({heroi, experiencia}:HeroiProps){
             }
         }, 150);*/
         
-       for(countXP; targetExp > countXP; countXP++){
-            setTimeout(()=>{
+       /*for(countXP; targetExp > countXP; countXP++){
+            setInterval(()=>{
                 setCurrentExp(countXP)
             }, ((countXP-targetExp) * 150))            
+        }*/
+        
+        while(targetExp > countXP){                        
+            setTimeout(()=>{
+                setCurrentExp(countXP)
+            }, 150)  
+            countXP++                       
         }
-
-        let title:string, informacao:string, nivel:number
         
-        title = functionTitle(targetExp) ?? ""
-        textTitle!.innerText = title
+        //Atualizando status
+        setCurrentNivel(functionNivel(targetExp))
+        setCurrentTitulo(functionTitle(targetExp))
+        setCurrentInformacao(cartaoHeroi(targetExp, heroi))
 
-        nivel = functionNivel(targetExp) ?? 0
-        if(nivel === 999){
-            textNivel!.innerText = '??'
-        }else{
-            textNivel!.innerText = nivel.toString()
-        }        
-        
-        //Montando Informação
-        informacao = `O Herói de nome ${heroi} está no nível de ${title} `
-        textInformacao!.innerText = informacao
-
-        
     }
 
     //------------------------------------------------------------------//
