@@ -1,8 +1,7 @@
 # ⚜️Desafio Santander Bootcamp 2024 - Classificador de Nível de Herói ⚜️
 Primeiro desafio proposto pelo Bootcamp da Santander na trilha de *Desenvolvimento de Jogos com Godot* elaborado em Web com **Typescript** e **React**.
 
-<img src="./src/img/react.png" width="80" alt="React" > 
-<img src="./src/img/typescript.png" width="90" alt="TypeScript" >
+<img src="./src/img/react.png" width="80" alt="React" > <img src="./src/img/typescript.png" width="90" alt="TypeScript" >
 
 Inicialmente deve-se informar o nome do seu Herói, a quantidade de experiência que possui e o sexo do personagem.</br>
 Poder ser acessado através desse [Link](https://classificador-nivel-heroi.vercel.app/)
