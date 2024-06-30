@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
+import ToastAnimated, { showToast } from './form-utils/toastForms';
 
 //Components
 import Heroi from './components/Heroi';
 
 //Style
 import './style/App.css';
-import { isNullishCoalesce } from 'typescript';
 
 function App() {
 
@@ -15,25 +15,24 @@ function App() {
   const [heroi, setHeroi]= useState<boolean>(false)
   const [sexo, setSexo]= useState<string>('')
 
-
+  
   const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()    
 
     //Validação dos campos referente ao nosso Herói
-    if(!nomePersonagem){
-      alert("Nome do Pergonagem Obrigatório!")
+    if(!nomePersonagem){            
+      showToast({typeToast:"failed", messageToast:"Nome do Pergonagem Obrigatório!"})
       return false
     }else if(!experiencia || experiencia <= 0){
-      alert("Quantidade de experiência adquirida não pode ser igual ou menor que 0!")
+      showToast({typeToast:"failed", messageToast:"Quantidade de experiência adquirida não pode ser igual ou menor que 0!"})
       return false
     }else if(!sexo){
-      alert("Selecione o sexo do seu Heroi!")
+      showToast({typeToast:"failed", messageToast:"Selecione o sexo do seu Heroi!"})
       return false
     }
 
     //Renderizando nosso Herói
     renderHero(true)
-
   }
 
   const renderHero = (ativo:Boolean) =>{
@@ -47,7 +46,11 @@ function App() {
 
   return (
     <>
-      <div id="content-app">
+      <div id="content-app"> 
+        <div className='title'>
+          <h1>Classificação Herói</h1>
+          <img width="64" height="64" src="https://img.icons8.com/dusk/64/elden-ring.png" alt="elden-ring"/>
+        </div>    
         <form id="formulario-heroi" onSubmit={handleSubmite}>
           <input 
             type="text" 
@@ -81,10 +84,9 @@ function App() {
               checked={sexo === "feminino"}
             />
           </div>
-          
-          
           <button type="submit">Up</button>
-        </form>
+        </form>  
+        <ToastAnimated />              
       </div>          
     </>
   );

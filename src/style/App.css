@@ -68,6 +68,10 @@ button:hover{
   align-items: flex-end;
 }
 
+form div, form input, h1{    
+  color: rgb(255, 255, 255);
+}
+
 
 
 

@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 //Style
 import './style/index.css';
-import { resolve } from 'path';
 
 type HeroiProps = {
     heroi: string;
@@ -97,8 +96,6 @@ function Heroi({heroi, experiencia, sexo}:HeroiProps){
     } 
 
     //------------------------------------------------------------------//
-    
-
     const [currentExp, setCurrentExp] = useState<number>(experiencia);
     const [currentNivel, setCurrentNivel] = useState<number>(functionNivel(experiencia));
     const [currentTitulo, setCurrentTitulo] = useState<string>(functionTitle(experiencia));
@@ -126,7 +123,7 @@ function Heroi({heroi, experiencia, sexo}:HeroiProps){
         while(countXP <= targetExp && countXP <= 10001){
             setCurrentExp(countXP)
             countXP++
-            await sleep(150)
+            await sleep(50)
         }
               
         // setInterval funciona melhor como "Laço de repetição" em tempo rela no React, deixando mais simples
