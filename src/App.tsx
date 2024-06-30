@@ -13,6 +13,8 @@ function App() {
   const [nomePersonagem, setPersonagem] = useState<string>('')
   const [experiencia, setExp]= useState<number>(0)
   const [heroi, setHeroi]= useState<boolean>(false)
+  const [sexo, setSexo]= useState<string>('')
+
 
   const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()    
@@ -24,6 +26,9 @@ function App() {
     }else if(!experiencia || experiencia <= 0){
       alert("Quantidade de experiência adquirida não pode ser igual ou menor que 0!")
       return false
+    }else if(!sexo){
+      alert("Selecione o sexo do seu Heroi!")
+      return false
     }
 
     //Renderizando nosso Herói
@@ -34,7 +39,7 @@ function App() {
   const renderHero = (ativo:Boolean) =>{
     setHeroi(true)
     const root = ReactDOM.createRoot(document.getElementById('content-app') as HTMLElement)  
-    const HeroiComponent = (<Heroi heroi={nomePersonagem} experiencia={experiencia} ></Heroi>)
+    const HeroiComponent = (<Heroi heroi={nomePersonagem} experiencia={experiencia} sexo={sexo} ></Heroi>)
     root.render(HeroiComponent) 
   }
 
@@ -56,6 +61,28 @@ function App() {
             value={experiencia}
             onChange={(e) => setExp(parseInt(e.target.value))}
           />
+
+          <div>
+            <label htmlFor="masculino">Masculino</label>
+            <input 
+              type="radio" 
+              id="masculino"
+              value="masculino"
+              onChange={(e) => setSexo(e.target.value)}
+              checked={sexo === "masculino"}
+            />
+
+            <label htmlFor="feminino">Feminino</label>
+            <input 
+              type="radio" 
+              id="feminino"
+              value="feminino"
+              onChange={(e) => setSexo(e.target.value)}
+              checked={sexo === "feminino"}
+            />
+          </div>
+          
+          
           <button type="submit">Up</button>
         </form>
       </div>          

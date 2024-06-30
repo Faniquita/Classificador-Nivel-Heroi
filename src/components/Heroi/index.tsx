@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 //Style
 import './style/index.css';
+import { resolve } from 'path';
 
 type HeroiProps = {
     heroi: string;
-    experiencia: number
+    experiencia: number;
+    sexo: string;
 }
 
-function Heroi({heroi, experiencia}:HeroiProps){
+function Heroi({heroi, experiencia, sexo}:HeroiProps){
      
     //MONTANDO TITULO DO HEROI
     const functionTitle = (expValidado:number) => {
@@ -61,7 +63,7 @@ function Heroi({heroi, experiencia}:HeroiProps){
             return nivelExp = 0
         }
 
-    }
+    }   
 
     //MONTANDO INFORMAÇÃO GERAL DO HEROI
     const cartaoHeroi = (expValidado:number, heroi:string) => {
@@ -74,46 +76,69 @@ function Heroi({heroi, experiencia}:HeroiProps){
         return informacao
     }
 
+    //MONTANDO CARACTERES DO HEROI
+    const functionSexo = (sexoHeroi:string)=>{
+        let imgSrcSexoHeroi:string
+
+        if(sexoHeroi === 'feminino'){   
+            return imgSrcSexoHeroi = require('./img/sexo-feminino.png')
+        }else{
+            return imgSrcSexoHeroi = require('./img/sexo-masculino.png')
+        }        
+    } 
+
+    const functionHeroi = (caractereSexo:string)=>{
+        let imgSrcHeroi:string
+        if(caractereSexo === 'feminino'){   
+            return imgSrcHeroi = require('./img/pj1.png')
+        }else{
+            return imgSrcHeroi = require('./img/pj2.png')
+        }         
+    } 
 
     //------------------------------------------------------------------//
-    const chibi = require('./img/pj1.png')
+    
 
     const [currentExp, setCurrentExp] = useState<number>(experiencia);
     const [currentNivel, setCurrentNivel] = useState<number>(functionNivel(experiencia));
     const [currentTitulo, setCurrentTitulo] = useState<string>(functionTitle(experiencia));
+    const [currentSexo, setCurrentSexo] = useState<string>(functionSexo(sexo));
+    const [currentHeroi, setCurrentHeroi] = useState<string>(functionHeroi(sexo));
     const [currentInformacao, setCurrentInformacao] = useState<string>(cartaoHeroi(experiencia, heroi));
 
     const [exp, setExp]= useState<number>(0)    
 
     //VALIDANDO FORMULÁRIO PARA SUBIR DE LEVEL NOVAMENTE
-    const handleSubmite = (e:React.FormEvent<HTMLFormElement>) => {
+    const handleSubmite = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()              
         
         //Subindo de Level
+
+        //Laço de repetição apenas para o desafio
+        //Funciona apenas dentro de uma função async em React para atualização em tempo real
         let targetExp = currentExp + exp;
         let countXP = currentExp
 
+        const sleep = (ms:number) => new Promise(resolve => setTimeout(resolve, ms))
+
+        console.log(targetExp)
+        console.log(countXP)
+        while(countXP <= targetExp && countXP <= 10001){
+            setCurrentExp(countXP)
+            countXP++
+            await sleep(150)
+        }
+              
+        // setInterval funciona melhor como "Laço de repetição" em tempo rela no React, deixando mais simples
         /*let interval = setInterval(() => {
-            if (currentExp < targetExp) {
-                setCurrentExp((prev) => prev + 1);
+            if (countXP < targetExp && countXP < 10001) {
+                countXP++
+                setCurrentExp(countXP);
             } else {
                 clearInterval(interval);
             }
-        }, 150);*/
-        
-       /*for(countXP; targetExp > countXP; countXP++){
-            setInterval(()=>{
-                setCurrentExp(countXP)
-            }, ((countXP-targetExp) * 150))            
-        }*/
-        
-        while(targetExp > countXP){                        
-            setTimeout(()=>{
-                setCurrentExp(countXP)
-            }, 150)  
-            countXP++                       
-        }
-        
+        }, 100)*/
+                
         //Atualizando status
         setCurrentNivel(functionNivel(targetExp))
         setCurrentTitulo(functionTitle(targetExp))
@@ -130,10 +155,13 @@ function Heroi({heroi, experiencia}:HeroiProps){
             </div>
             <div className="content-personagem">                
                 <div id="personagem">
-                    <img src={chibi} alt="Herói" />
+                    <img src={currentHeroi} alt="Herói" />
                 </div>
                 <div className="informacoes">
-                    <div id="nome">{heroi}</div>
+                    <div id="nome">
+                        {heroi}
+                        <img src={currentSexo} alt={sexo} />
+                    </div>
                     <div id="titulo">{currentTitulo}</div>
                     <div id="level">Level {currentNivel}</div>
                     <div id="experiencia"> {currentExp} / 10001 </div>                    
