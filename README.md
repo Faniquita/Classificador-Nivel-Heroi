@@ -5,7 +5,7 @@ Primeiro desafio proposto pelo Bootcamp da Santander na trilha de *Desenvolvimen
 <img src="./src/img/typescript.png" width="90" alt="TypeScript" >
 
 Inicialmente deve-se informar o nome do seu Herói, a quantidade de experiência que possui e o sexo do personagem.</br>
-Poder ser acessado através desse <a scr="https://classificador-nivel-heroi.vercel.app/">Link</a>
+Poder ser acessado através desse [Link](https://classificador-nivel-heroi.vercel.app/)
 
 <img src="./src/img/entra.png" width="400" alt="inicio" > 
 
